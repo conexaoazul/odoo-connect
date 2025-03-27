@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <!-- Visão de Formulário -->
+        <record id="view_crm_lead_form_custom_button" model="ir.ui.view">
+            <field name="name">crm.lead.view.form.inherit.whatsapp.redirect</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <!-- Localiza o botão "Sugestões da IA" e insere o novo botão após ele -->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_send_msg" string="Enviar WhatsApp"
+                                type="object"
+                                class="oe_stat_button" icon="fa-whatsapp"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Visão de Lista -->
+        <record id="view_crm_lead_tree_custom_button" model="ir.ui.view">
+            <field name="name">crm.lead.view.tree.inherit.whatsapp.redirect</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="arch" type="xml">
+                <!-- Localiza a área de ações na visão de lista e insere o botão -->
+                <xpath expr="//tree" position="inside">
+                    <button name="action_send_msg" string="Enviar WhatsApp"
+                            type="object"
+                            class="oe_stat_button" icon="fa-whatsapp"
+                            context="{'default_lead_id': active_id}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

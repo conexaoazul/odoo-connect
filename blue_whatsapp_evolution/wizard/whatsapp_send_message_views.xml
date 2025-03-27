@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<odoo>
+
+<!-- Definições do Menu Integração WhatsApp-->
+    <!-- Odoo View Definition for Whatsapp Message Form -->
+    <record id="whatsapp_send_message_view_form" model="ir.ui.view">
+        <field name="name">whatsapp.send.message.view.form</field>
+        <field name="model">whatsapp.send.message</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Mensagem WhatsApp">
+                <group>
+                    <field name="user_id" help="Selecione o usuário para enviar a mensagem."/>
+                    <field name="mobile" help="Número whatsapp do usuário selecionado"/>
+                    <field name="message" help="Digite a mensagem que será enviada pelo WhatsApp."/>
+                </group>
+                <group>
+                    <field name="attachment_ids" 
+                        widget="many2many_binary" 
+                        options="{'no_create': True}" 
+                        string="Anexos" 
+                        help="Selecione ou arraste arquivos para enviar como anexo."/>
+                </group>
+                <footer>
+                    <button name="action_send_message" string="Enviar" type="object" class="btn-primary" help="Clique para enviar a mensagem"/>
+                    <button name="cancel" string="Cancelar" special="cancel" class="btn-secondary" help="Clique para cancelar a operação"/>
+                </footer>
+                
+            </form>
+        </field>
+    </record>
+
+</odoo>

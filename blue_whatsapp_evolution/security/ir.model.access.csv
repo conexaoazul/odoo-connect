@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_whatsapp_send_message_user,access.whatsapp.send.message.user,model_whatsapp_send_message,base.group_user,1,1,1,1
+access_blue_whatsapp_account_user,access.blue.whatsapp.account.user,model_blue_whatsapp_account,base.group_user,1,1,1,1
+access_api_response_user,access.api.response.user,model_api_response,base.group_user,1,1,1,1
+access_blue_whatsapp_message_user,access.blue.whatsapp.message.user,model_blue_whatsapp_message,base.group_user,1,1,1,1

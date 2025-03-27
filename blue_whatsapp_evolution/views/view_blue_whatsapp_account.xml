@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_blue_whatsapp_account_tree" model="ir.ui.view">
+        <field name="name">blue.whatsapp.account.tree</field>
+        <field name="model">blue.whatsapp.account</field>
+        <field name="arch" type="xml">
+            <tree string="Contas WhatsApp">
+                <field name="name"/>
+                <field name="active"/>
+                <field name="evolution_instance_status"/>
+                <field name="evolution_last_connection"/>
+                <field name="evolution_restart_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_blue_whatsapp_account_form" model="ir.ui.view">
+        <field name="name">blue.whatsapp.account.form</field>
+        <field name="model">blue.whatsapp.account</field>
+        <field name="arch" type="xml">
+            <form string="Conta WhatsApp Evolution">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                        <field name="allowed_company_ids" widget="many2many_tags"/>
+                    </group>
+
+                    <group string="Dados Evolution API">
+                        <field name="evolution_api_url" readonly="1"/>
+                        <field name="evolution_global_token" readonly="1" password="True"/>
+                        <field name="evolution_instance_id" readonly="1"/>
+                        <field name="evolution_instance_status" readonly="1"/>
+                        <field name="evolution_last_connection" readonly="1"/>
+                        <field name="evolution_restart_count" readonly="1"/>
+                    </group>
+
+                    <group string="Ações">
+                        <button name="create_evolution_instance" string="Criar Instância" type="object" class="oe_highlight"/>
+                        <button name="connect_evolution_instance" string="Conectar" type="object"/>
+                        <button name="restart_evolution_instance" string="Reiniciar" type="object"/>
+                        <button name="get_evolution_connection_status" string="Atualizar Status" type="object"/>
+                        <button name="logout_evolution_instance" string="Logout" type="object"/>
+                        <button name="delete_evolution_instance" string="Deletar Instância" type="object"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

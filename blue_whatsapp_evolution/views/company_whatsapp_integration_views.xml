@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <!-- Visão herdada para adicionar a nova página ao formulário do res.company -->
+        <record id="view_company_form_inherit_whatsapp" model="ir.ui.view">
+            <field name="name">res.company.form.inherit.whatsapp</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <!-- Página de integração com WhatsApp -->
+                    <page string="Integração com WhatsApp" name="integracao_whatsapp">
+                        <group>
+                            <!-- Campos da API Evolution -->
+                            <field string="URL da API Evolution" name="evolution_api_url"/>
+                            <field string="Token Global da API Evolution" name="evolution_global_token"/>
+                            <field string="Instância da API Evolution" name="evolution_api_instance"/>
+
+                        </group>
+                          <!-- Botão para acionar a requisição -->
+                        <button name="action_test_whatsapp_api" type="object" string="Testar Conexão API Evolution" class="btn-primary"/>
+                    </page>
+                </xpath>
+                
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+
+        <!-- Visão do modelo de resposta da API -->
+        <record id="view_api_response_form" model="ir.ui.view">
+            <field name="name">api.response.form</field>
+            <field name="model">api.response</field>
+            <field name="arch" type="xml">
+                <form string="Resposta da API" create="false" edit="false">
+                    <sheet>
+                        <group>
+                            <div class="oe_title" style="font-size: 32px; color: #777; text-align: center; margin-top: 20px;">
+                                <span>
+                                    <field name="response" readonly="1" style="border:none; background:none; text-align:center; font-size: 16px; white-space: nowrap;"/>
+                                </span>
+                            </div>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
