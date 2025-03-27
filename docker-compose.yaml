@@ -1,0 +1,123 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    user: root
+    environment:
+      - POSTGRES_USER=odoo
+      - POSTGRES_PASSWORD=123OTImi17@2025
+      - POSTGRES_DB=postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - internal
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  crm:
+    image: odoo:17
+    user: root
+    depends_on:
+      - db
+    tty: true
+    command: odoo --db-filter=^odoo*
+    environment:
+      - ODOO_RC=/etc/odoo/odoo.conf
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=123OTImi17@2025
+    volumes:
+      - crm_conf:/etc/odoo
+      - crm_data:/var/lib/odoo
+      - extra_addons:/mnt/extra-addons  # Mapeamento para módulos extras
+    ports:
+      - "13069:8069"
+    networks:
+      - internal
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api:
+    image: atendai/evolution-api
+    restart: always
+    depends_on:
+      - redis
+    ports:
+      - 8080:8080
+    volumes:
+      - api_instances:/evolution/instances
+    networks:
+      - internal
+    expose:
+      - 8080
+    environment:
+      - SERVER_URL=http://localhost:8080
+      - DATABASE_PROVIDER=postgresql
+      - DATABASE_CONNECTION_URI=postgresql://odoo:123OTImi17@2025@db:5432/evolution?schema=public
+      - DATABASE_SAVE_DATA_INSTANCE=true
+      - DATABASE_SAVE_DATA_NEW_MESSAGE=true
+      - DATABASE_SAVE_MESSAGE_UPDATE=true
+      - DATABASE_SAVE_DATA_CONTACTS=true
+      - DATABASE_SAVE_DATA_CHATS=true
+      - DATABASE_SAVE_DATA_LABELS=true
+      - DATABASE_SAVE_DATA_HISTORIC=true
+      - DATABASE_SAVE_IS_ON_WHATSAPP=true
+      - DATABASE_SAVE_IS_ON_WHATSAPP_DAYS=14
+      - DATABASE_DELETE_MESSAGE=true
+      - CACHE_REDIS_ENABLED=true
+      - CACHE_REDIS_URI=redis://redis:6379/6
+      - CACHE_REDIS_TTL=604800
+      - CACHE_REDIS_PREFIX_KEY=evolution
+      - CACHE_REDIS_SAVE_INSTANCES=false
+      - CACHE_LOCAL_ENABLED=false
+      - CONFIG_SESSION_PHONE_CLIENT=Conexao Azul
+      - CONFIG_SESSION_PHONE_NAME=Chrome
+      - CONFIG_SESSION_PHONE_VERSION=2.3000.1020181182
+      - AUTHENTICATION_API_KEY=1369429683C4C977415CAAFCCE10F7D57E11
+      - WA_BUSINESS_TOKEN_WEBHOOK=evolution
+      - WA_BUSINESS_URL=https://graph.facebook.com
+      - WA_BUSINESS_VERSION=v21.0
+      - WA_BUSINESS_LANGUAGE=pt_BR
+      - OPENAI_ENABLED=true
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis:
+    image: redis:latest
+    networks:
+      - internal
+    command: redis-server --port 6379 --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379
+    restart: unless-stopped
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  db_data:
+  crm_conf:
+  extra_addons:       # Volume para módulos extras
+  crm_data:
+  api_instances:
+  redis_data:
+
+networks:
+  internal:
+    driver: bridge
